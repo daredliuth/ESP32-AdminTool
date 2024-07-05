@@ -3,7 +3,7 @@
 <!-- BEGIN HEAD-->
 <head>
     <meta charset="UTF-8" />
-    <title>ESP32 Admin Tool | Dispositivo</title>
+    <title>ESP32 Admin Tool | Restablecer</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 	<meta content="Página para la administración de los recursos de un ESP32." name="description" />
 	<meta content="Daredliuth" name="author" />
@@ -115,7 +115,7 @@
             <div class="inner" style="min-height:1200px;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2>Información del dispositivo</h2>
+                        <h2>Restablecer los valores predeterminados</h2>
                     </div>
                 </div>
                 <hr>
@@ -123,33 +123,13 @@
                 <div class="col-lG-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="icon-info"></i> Dispositivo
+                            <i class="icon-refresh"></i> Dar click en el botón para restablecer las configuraciones a sus valores predeterminados.
                         </div>
                         <div class="panel-body">
                             <br>
-                            <!--FORMULARIO-->
-                            <form class="form-horizontal">
-                                <div class="form-group" id="formMqttUser">
-                                    <label for="serie" class="control-label col-lg-3">Número de serie:</label>
-                                    <div class="col-lg-5">
-                                        <input type="text" id="serie" value="935115" readonly class="form-control">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="formId">
-                                    <label for="id" class="control-label col-lg-3">ID del dispositivo:</label>
-                                    <div class="col-lg-5">
-                                        <input type="text" id="id" name="id" value="esp32admin" placeholder="ID del dispositivo" class="form-controls">
-                                        <label for="id" class="help-block formulario_input-error">El id debe contener entre 4 y 30 dígitos, solo puede contener números y letras minúsculas.</label>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label for="#" class="control-label col-lg-3"></label>
-                                    <div class="col-lg-5">
-                                        <button class="btn btn-primary" type="submit"><i class="icon-save icon-white"></i> Guardar</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <!--END FORMULARIO-->
+                            <button class="btn btn-danger btn-lg" onclick="Restaurar()" id="btn">
+                                <i class="icon-refresh icon-white"></i> Restablecer
+                            </button>
                         </div>
                     </div>
                 </div>
