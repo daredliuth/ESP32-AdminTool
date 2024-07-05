@@ -20,6 +20,7 @@
     <!--END GLOBAL STYLES -->
     <!-- PAGE LEVEL STYLES -->
     <link href="assets/css/layout2.css" rel="stylesheet" />
+    <!--END PAGE LEVEL STYLES-->
 </head>
 <!-- END  HEAD-->
 <!-- BEGIN BODY-->
@@ -45,10 +46,10 @@
                             <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="icon-gear"></i>Configuración</a>
+                            <li><a href="esp-admin"><i class="icon-gear"></i>Configuración</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="login.html"><i class="icon-signout"></i>Salir</a>
+                            <li><a href="esp-logout"><i class="icon-signout"></i>Salir</a>
                             </li>
                         </ul>
                     </li>
@@ -75,18 +76,18 @@
                 <br />
             </div>
             <ul id="menu" class="collapse">
-                <li class="panel">
+                <li class="panel active">
                     <a href="/" >
                         <i class="icon-desktop"></i> Dashboard
                     </a>                   
                 </li>
-                <li class="panel active">
-                    <a href="#" >
+                <li class="panel">
+                    <a href="wifi.html" >
                         <i class="icon-signal"></i> WiFi
                     </a>                   
                 </li>
                 <li class="panel">
-                    <a href="#" >
+                    <a href="mqtt.html" >
                         <i class="icon-sitemap"></i> MQTT
                     </a>                   
                 </li>
@@ -98,14 +99,14 @@
                         </span>
                     </a>
                     <ul class="collapse" id="component-nav">                       
-                        <li class=""><a href="#"><i class="icon-angle-right"></i>Dispositivo</a></li>
-                        <li class=""><a href="#"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
-                        <li class=""><a href="#"><i class="icon-angle-right"></i>Reinicio</a></li>
-                        <li class=""><a href="#"><i class="icon-angle-right"></i>Contraseña</a></li>
+                        <li class=""><a href="esp-device"><i class="icon-angle-right"></i>Dispositivo</a></li>
+                        <li class=""><a href="esp-restore"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
+                        <li class=""><a href="esp-restart"><i class="icon-angle-right"></i>Reinicio</a></li>
+                        <li class=""><a href="esp-admin"><i class="icon-angle-right"></i>Contraseña</a></li>
                     </ul>
                 </li>
                 <li class="panel">
-                    <a href="#" >
+                    <a href="esp-logout" >
                         <i class="icon-signout"></i> Salir
                     </a>                   
                 </li>

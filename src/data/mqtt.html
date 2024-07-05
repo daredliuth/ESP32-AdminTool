@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- BEGIN HEAD-->
+<head>
+    <meta charset="UTF-8" />
+    <title>ESP32 Admin Tool | MQTT</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="Página para la administración de los recursos de un ESP32." name="description" />
+	<meta content="Daredliuth" name="author" />
+    <!--Favicon icon-->
+    <link rel="icon" href="assets/img/logo.png" type="image/x-icon">
+    <!-- GLOBAL STYLES -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/MoneAdmin.css" />
+    <link rel="stylesheet" href="assets/plugins/Font-Awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="assets/plugins/switch/static/stylesheets/bootstrap-switch.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!--END GLOBAL STYLES -->
+</head>
+<!-- END  HEAD-->
+<!-- BEGIN BODY-->
+<body class="padTop53 " >
+    <!-- MAIN WRAPPER -->
+    <div id="wrap">
+        <!-- HEADER SECTION -->
+        <div id="top">
+            <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
+                <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle">
+                    <i class="icon-align-justify"></i>
+                </a>
+                <!-- LOGO SECTION -->
+                <header class="navbar-header">
+                    <a href="index.html" class="navbar-brand">
+                    <img src="assets/img/logo.png" alt="" /></a>
+                </header>
+                <!-- END LOGO SECTION -->
+                <ul class="nav navbar-top-links navbar-right">
+                    <!--ADMIN SETTINGS SECTIONS -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="esp-admin"><i class="icon-gear"></i>Configuración</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="esp-logout"><i class="icon-signout"></i>Salir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--END ADMIN SETTINGS -->
+                </ul>
+            </nav>
+        </div>
+        <!-- END HEADER SECTION -->
+        <!-- MENU SECTION -->
+        <div id="left">
+            <div class="media user-media well-small">
+                <a class="user-link" href="#">
+                    <img class="media-object img-thumbnail user-img" alt="User Picture" src="assets/img/user.gif" />
+                </a>
+                <br />
+                <div class="media-body">
+                    <h5 class="media-heading"> ESP32</h5>
+                    <ul class="list-unstyled user-info">
+                        <li>
+                             <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online
+                        </li>
+                    </ul>
+                </div>
+                <br />
+            </div>
+            <ul id="menu" class="collapse">
+                <li class="panel">
+                    <a href="/" >
+                        <i class="icon-desktop"></i> Dashboard
+                    </a>                   
+                </li>
+                <li class="panel">
+                    <a href="wifi.html" >
+                        <i class="icon-signal"></i> WiFi
+                    </a>                   
+                </li>
+                <li class="panel active">
+                    <a href="mqtt.html" >
+                        <i class="icon-sitemap"></i> MQTT
+                    </a>                   
+                </li>
+                <li class="panel ">
+                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
+                        <i class="icon-gear"> </i> Administrar
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="component-nav">                       
+                        <li class=""><a href="esp-device"><i class="icon-angle-right"></i>Dispositivo</a></li>
+                        <li class=""><a href="esp-restore"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
+                        <li class=""><a href="esp-restart"><i class="icon-angle-right"></i>Reinicio</a></li>
+                        <li class=""><a href="esp-admin"><i class="icon-angle-right"></i>Contraseña</a></li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="esp-lognout" >
+                        <i class="icon-signout"></i> Salir
+                    </a>                   
+                </li>
+            </ul>
+        </div>
+        <!--END MENU SECTION -->
+        <!--PAGE CONTENT -->
+        <div id="content">
+            <div class="inner" style="min-height:1200px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Configuración del Broker MQTT</h2>
+                    </div>
+                </div>
+                <hr>
+                <!--PANEL-->
+                <div class="col-lG-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="icon-sitemap"></i> Broker MQTT
+                        </div>
+                        <div class="panel-body">
+                            <br>
+                            <!--FORMULARIO-->
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="text1" class="control-label col-lg-3">Conexión MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <div class="make-switch switch-mini" data-on="primary" data-off="danger">
+                                            <input type="checkbox" #MQTT# id="MQTT" onchange="MqttEnable()"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formIdMqtt">
+                                    <label for="idMqtt" class="control-label col-lg-3">ID del cliente del broker MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="idMqtt" name="idMqtt" value="ESP32" placeholder="ID broker MQTT" class="form-control mqtt">
+                                        <label for="idMqtt" class="help-block formulario_input-error">El ID debe contener entre 4 y 30 dígitos, solo puede contener números, letras, guión bajo y medio.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formMqttUser">
+                                    <label for="mqttUser" class="control-label col-lg-3">Usuario del broker MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="mqttUser" name="mqttUser" value="Daredliuth" placeholder="Usuario del broker MQTT" class="form-control mqtt">
+                                        <label for="mqttUser" class="help-block formulario_input-error">El usuario debe contener entre 4 y 30 dígitos, solo puede contener números, letras, guión bajo y medio.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formMqttPass">
+                                    <label for="mqttPass" class="control-label col-lg-3">Constraseña del broker MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <input type="password" id="mqttPass" name="mqttPass" placeholder="******" class="form-control mqtt">
+                                        <label for="mqttPass" class="help-block formulario_input-error">La contraseña debe contener entre 4 y 30 dígitos.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formMqttServer">
+                                    <label for="mqttServer" class="control-label col-lg-3">Servidor MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="mqttServer" name="mqttServer" value="daredliuth.com" placeholder="Servidor MQTT" class="form-control mqtt">
+                                        <label for="mqttServer" class="help-block formulario_input-error">El servidor no es válido.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formMqttPort">
+                                    <label for="mqttPort" class="control-label col-lg-3">Puerto del servidor MQTT:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="mqttPort" name="mqttPort" value="1883" placeholder="Puerto del servidor MQTT" class="form-control mqtt">
+                                        <label for="mqttPort" class="help-block formulario_input-error">El puerto debe estar entre 0 y 65535.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formMqttTime">
+                                    <label for="mqttTime" class="control-label col-lg-3">Publicar cada [min]:</label>
+                                    <div class="col-lg-5">
+                                        <input type="number" id="mqttTime" name="mqttTime" value="1" placeholder="Tiempo [min]" class="form-control mqtt">
+                                        <label for="mqttTime" class="help-block formulario_input-error">El tiempo mínimo debe estar entre 1[min] y 60[min].</label>
+                                    </div>
+                                </div>
+                                <div class="form-group formulario_mensaje" id="formMensaje">
+                                    <div class="col-lG-12">
+                                        <div class="alert alert-danger">
+                                            <p class="alert-link"><i class="icon-remove-sign"></i><b>Error:</b> Por favor rellene correctamente el formulario.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="#" class="control-label col-lg-3"></label>
+                                    <div class="col-lg-5">
+                                        <button class="btn btn-primary" type="submit"><i class="icon-save icon-white"></i> Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--END FORMULARIO-->
+                        </div>
+                    </div>
+                </div>
+                <!--END PANEL-->
+            </div>
+        </div>
+        <!--END PAGE CONTENT -->
+    </div>
+    <!--END MAIN WRAPPER --> 
+    <!-- FOOTER -->
+    <div id="footer">
+        <p>&copy;  Daredliuth &nbsp;2024 &nbsp; v0.3.0</p>
+    </div>
+    <!--END FOOTER -->
+    <!-- GLOBAL SCRIPTS -->
+    <script src="assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/modernizr-respond.min.js"></script>
+    <script src="assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
+    <script src="assets/plugins/scripts.js"></script>
+    <!-- END GLOBAL SCRIPTS -->
+</body>
+<!-- END BODY-->
+</html>

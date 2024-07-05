@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- BEGIN HEAD-->
+<head>
+    <meta charset="UTF-8" />
+    <title>ESP32 Admin Tool | WiFi</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="Página para la administración de los recursos de un ESP32." name="description" />
+	<meta content="Daredliuth" name="author" />
+    <!--Favicon icon-->
+    <link rel="icon" href="assets/img/logo.png" type="image/x-icon">
+    <!-- GLOBAL STYLES -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/theme.css" />
+    <link rel="stylesheet" href="assets/css/MoneAdmin.css" />
+    <link rel="stylesheet" href="assets/plugins/Font-Awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="assets/plugins/switch/static/stylesheets/bootstrap-switch.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!--END GLOBAL STYLES -->
+</head>
+<!-- END  HEAD-->
+<!-- BEGIN BODY-->
+<body class="padTop53 " >
+    <!-- MAIN WRAPPER -->
+    <div id="wrap">
+        <!-- HEADER SECTION -->
+        <div id="top">
+            <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
+                <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle">
+                    <i class="icon-align-justify"></i>
+                </a>
+                <!-- LOGO SECTION -->
+                <header class="navbar-header">
+                    <a href="index.html" class="navbar-brand">
+                    <img src="assets/img/logo.png" alt="" /></a>
+                </header>
+                <!-- END LOGO SECTION -->
+                <ul class="nav navbar-top-links navbar-right">
+                    <!--ADMIN SETTINGS SECTIONS -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="esp-admin"><i class="icon-gear"></i>Configuración</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="esp-logout"><i class="icon-signout"></i>Salir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--END ADMIN SETTINGS -->
+                </ul>
+            </nav>
+        </div>
+        <!-- END HEADER SECTION -->
+        <!-- MENU SECTION -->
+        <div id="left">
+            <div class="media user-media well-small">
+                <a class="user-link" href="#">
+                    <img class="media-object img-thumbnail user-img" alt="User Picture" src="assets/img/user.gif" />
+                </a>
+                <br />
+                <div class="media-body">
+                    <h5 class="media-heading"> ESP32</h5>
+                    <ul class="list-unstyled user-info">
+                        <li>
+                             <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online
+                        </li>
+                    </ul>
+                </div>
+                <br />
+            </div>
+            <ul id="menu" class="collapse">
+                <li class="panel">
+                    <a href="/" >
+                        <i class="icon-desktop"></i> Dashboard
+                    </a>                   
+                </li>
+                <li class="panel active">
+                    <a href="wifi.html" >
+                        <i class="icon-signal"></i> WiFi
+                    </a>                   
+                </li>
+                <li class="panel">
+                    <a href="mqtt.html" >
+                        <i class="icon-sitemap"></i> MQTT
+                    </a>                   
+                </li>
+                <li class="panel ">
+                    <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
+                        <i class="icon-gear"> </i> Administrar
+                        <span class="pull-right">
+                            <i class="icon-angle-left"></i>
+                        </span>
+                    </a>
+                    <ul class="collapse" id="component-nav">                       
+                        <li class=""><a href="esp-device"><i class="icon-angle-right"></i>Dispositivo</a></li>
+                        <li class=""><a href="esp-restore"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
+                        <li class=""><a href="esp-restart"><i class="icon-angle-right"></i>Reinicio</a></li>
+                        <li class=""><a href="esp-admin"><i class="icon-angle-right"></i>Contraseña</a></li>
+                    </ul>
+                </li>
+                <li class="panel">
+                    <a href="esp-lognout" >
+                        <i class="icon-signout"></i> Salir
+                    </a>                   
+                </li>
+            </ul>
+        </div>
+        <!--END MENU SECTION -->
+        <!--PAGE CONTENT -->
+        <div id="content">
+            <div class="inner" style="min-height:1200px;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>Configuración de la red WiFi</h2>
+                    </div>
+                </div>
+                <hr>
+                <!--PANEL-->
+                <div class="col-lG-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="icon-signal"></i> Configuración de red WiFi cliente y en modo AP.
+                            <span class="badge pull-right">adminESP32 / 9B1C5210CE0C3D</span>
+                        </div>
+                        <div class="panel-body">
+                            <br>
+                            <!--FORMULARIO-->
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="#" class="control-label col-lg-3"></label>
+                                    <div class="col-lg-5">
+                                        <button class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-search"></i>Buscar</button>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formSSID">
+                                    <label for="ssid" class="control-label col-lg-3">Nombre de la red inalámbrica</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="ssid" value="CD_UNAM" placeholder="Nombre de la red (SSID)" class="form-control">
+                                        <label for="ssid" class="help-block formulario_input-error">La red inalámbrica tiene un límite de 30 dígitos.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formPw">
+                                    <label for="pw" class="control-label col-lg-3">Contraseña de la red inalámbrica</label>
+                                    <div class="col-lg-5">
+                                        <input type="password" id="pw" name="pw" value="" placeholder="*******" class="form-control">
+                                        <label for="pw" class="help-block formulario_input-error">La contraseña tiene un límite de 30 dígitos.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="text1" class="control-label col-lg-3">IP Estática:</label>
+                                    <div class="col-lg-5">
+                                        <div class="make-switch switch-mini" data-on="primary" data-off="danger">
+                                            <input type="checkbox" #staticIP# id="staticIP" onchange="IpEnable()"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formLocalIP">
+                                    <label for="localIP" class="control-label col-lg-3">Dirección IP:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="localIP" name="localIP" placeholder="Dirección IP" value="192.168.100.1" class="form-control ip">
+                                        <label for="localIP" class="help-block formulario_input-error">No es una IP válida.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formSubnet">
+                                    <label for="subnet" class="control-label col-lg-3">Máscara de subred:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="subnet" name="subnet" placeholder="Máscara de subred" value="255.255.255.0" class="form-control ip">
+                                        <label for="subnet" class="help-block formulario_input-error">No es una máscara válida.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formGateway">
+                                    <label for="gateway" class="control-label col-lg-3">Puerta de enlace:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="gateway" name="gateway" placeholder="Puerta de enlace" value="192.168.100.1" class="form-control ip">
+                                        <label for="gateway" class="help-block formulario_input-error">No es una puerta de enlace válida.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formPrimaryDNS">
+                                    <label for="primaryDNS" class="control-label col-lg-3">DNS primario:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="primaryDNS" name="primaryDNS" placeholder="DNS primario" value="8.8.8.8" class="form-control ip">
+                                        <label for="primaryDNS" class="help-block formulario_input-error">No es un DNS válido.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formSecondaryDNS">
+                                    <label for="secondaryDNS" class="control-label col-lg-3">DNS secundario:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="secondaryDNS" name="secondaryDNS" placeholder="DNS secundario" value="8.8.4.4" class="form-control ip">
+                                        <label for="secondaryDNS" class="help-block formulario_input-error">No es un DNS válido.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="text1" class="control-label col-lg-3">Modo AP:</label>
+                                    <div class="col-lg-5">
+                                        <div class="make-switch switch-mini" data-on="primary" data-off="danger">
+                                            <input type="checkbox" #accessPoint# id="accessPoint" onchange="ApEnable()"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formNombreAP">
+                                    <label for="nombreAP" class="control-label col-lg-3">Nombre del punto de acceso:</label>
+                                    <div class="col-lg-5">
+                                        <input type="text" id="nombreAP" name="nombreAP" placeholder="Nombre (SSID) del punto de acceso" value="esp32WiFi" class="form-control ap">
+                                        <label for="nombreAP" class="help-block formulario_input-error">El punto de acceso tiene un límite de 31 dígitos</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formPasswordAP">
+                                    <label for="passwordAP" class="control-label col-lg-3">Contraseña del punto de acceso:</label>
+                                    <div class="col-lg-5">
+                                        <input type="password" id="passwordAP" name="passwordAP" placeholder="******" class="form-control ap">
+                                        <label for="passwordAP" class="help-block formulario_input-error">La contraseña del punto de acceso tiene un límite de 63 dígitos</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formCanalAP">
+                                    <label for="canalAP" class="control-label col-lg-3">Canal del punto de acceso:</label>
+                                    <div class="col-lg-5">
+                                        <input type="number" id="canalAP" name="canalAP" placeholder="Canal 1 - 13" value="13" class="form-control ap">
+                                        <label for="canalAP" class="help-block formulario_input-error">El canal no es válido.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="hiddenAP" class="control-label col-lg-3">Visibilidad:</label>
+                                    <div class="col-lg-5">
+                                        <div class="make-switch switch-mini" data-on="primary" data-off="danger">
+                                            <input type="checkbox" #visibilidadAP# id="visibilidadAP" onchange="ApVisEnable()"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="formConnetAP">
+                                    <label for="connetAP" class="control-label col-lg-3">Número de conexiones:</label>
+                                    <div class="col-lg-5">
+                                        <input type="number" id="connetAP" name="connetAP" placeholder="Min: 0 - Máx: 8" value="2" class="form-control ap">
+                                        <label for="connetAP" class="help-block formulario_input-error">No es un número de conexiones válido.</label>
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="#" class="control-label col-lg-3"></label>
+                                    <div class="col-lg-5">
+                                        <button class="btn btn-primary" type="submit"><i class="icon-save icon-white"></i> Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!--END FORMULARIO-->
+                        </div>
+                    </div>
+                </div>
+                <!--END PANEL-->
+            </div>
+        </div>
+        <!--END PAGE CONTENT -->
+    </div>
+    <!--END MAIN WRAPPER --> 
+    <!-- FOOTER -->
+    <div id="footer">
+        <p>&copy;  Daredliuth &nbsp;2024 &nbsp; v0.3.0</p>
+    </div>
+    <!--END FOOTER -->
+    <!-- GLOBAL SCRIPTS -->
+    <script src="assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/modernizr-respond.min.js"></script>
+    <script src="assets/plugins/switch/static/js/bootstrap-switch.min.js"></script>
+    <script src="assets/plugins/scripts.js"></script>
+    <!-- END GLOBAL SCRIPTS -->
+</body>
+<!-- END BODY-->
+</html>
