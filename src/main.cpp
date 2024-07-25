@@ -4,11 +4,11 @@
 
 #include "configuraciones.hpp"
 #include "funciones.hpp"
-#include "parpadeoLed.hpp"
 #include "configuracionesReset.hpp"
 #include "configuracionesLeer.hpp"
-#include "configuracionesEscribir.hpp"
+#include "configuracionesGuardar.hpp"
 #include "esp32_wifi.hpp"
+#include "esp32_mqtt.hpp"
 
 // put function declarations here:
 int myFunction(int, int);
@@ -22,14 +22,20 @@ void setup() {
     GenerarLog("Falló la inicialización del SPIFFS.",1);
     while(true);
   }
+  LeerConfiguracionRelays();
+  ApagadoEncendidoSimple(RELAY1,relay1Estado);
+  ApagadoEncendidoSimple(RELAY2,relay2Estado);
   LeerConfiguracionWiFi();
   WiFi.disconnect();
   delay(1000);
   WiFiSetup();
+
+  LeerConfiguracionMqtt();
+  
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  /*WiFi*/
   yield();
   if(wifiModo == WIFI_STA){
     WifiLoop();
@@ -37,9 +43,22 @@ void loop() {
   if(wifiModo == WIFI_AP){
     WifiApLoop();
   }
+  /*MQTT*/
+  if((WiFi.status() == WL_CONNECTED) && (wifiModo == WIFI_STA)){
+    if(mqttServidor != 0){
+      LoopMQTT();
+      if(mqttcliente.connected()){
+        if(millis() - ultimoMensaje > mqttTiempo){
+          ultimoMensaje = millis();
+          PublicarMQTT();
+        }
+      }
+    }
+  }
 }
 
 // put function definitions here:
 int myFunction(int x, int y) {
   return x + y;
 }
+

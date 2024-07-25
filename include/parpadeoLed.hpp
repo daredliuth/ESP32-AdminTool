@@ -55,3 +55,7 @@ void EncendidoSimple(int pin){
 void ApagadoSimple(int pin){
     digitalWrite(pin, LOW);
 }
+
+void ApagadoEncendidoSimple(int pin, bool estado){
+    digitalWrite(pin, !estado);
+}

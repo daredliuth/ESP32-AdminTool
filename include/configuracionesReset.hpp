@@ -17,3 +17,18 @@ void ReiniciarConfiguracionWifi(){
     apOculto = false;
     apNumConexiones = 4;
 }
+
+void ReiniciarConfiguracionMQTT(){
+    strlcpy(mqttUsuario, "daredliuth",sizeof(mqttUsuario));
+    strlcpy(mqttPassword, "contraseña", sizeof(mqttPassword));
+    strlcpy(mqttServidor, "daredliuth.com",sizeof(mqttServidor));
+    strlcpy(mqttId, IdDispositivo().c_str(),sizeof(mqttId));
+    mqttTiempo = 60000;
+    mqttPuerto = 1883;
+    mqttHabilitado = true;
+}
+
+void ReiniciarConfiguracionRelays(){
+    relay1Estado = LOW;
+    relay2Estado = LOW;
+}

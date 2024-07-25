@@ -21,8 +21,20 @@ char apPassword[63];
 int apCanal;
 int apOculto; //Si el AP está oculto (1) o no (0).
 int apNumConexiones;
+/*Variables MQTT*/
+boolean mqttHabilitado;
+char mqttUsuario[30];
+char mqttId[30];
+char mqttPassword[30];
+char mqttServidor[39];
+int mqttPuerto;
+int mqttTiempo;
 /*Configuración general*/
 char idDispositivo[30]; //ID del dispositivo.
 int contadorReinicios; //Contador para el número de reinicios del dispositivo.
 /*Otros*/
 uint8_t ip[4]; //Variable auxiliar para convertir string a IP.
+float tempCPU; //Variable para almacenar la temperatura del CPU.
+long ultimoMensaje = 0;
+/*Relays*/
+bool relay1Estado, relay2Estado; //Estado (Encendido/Apagado) de los relays.

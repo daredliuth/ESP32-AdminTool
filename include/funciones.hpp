@@ -1,3 +1,16 @@
+#include "parpadeoLed.hpp"
+
+#ifdef __cplusplus
+    extern "C"
+    {
+#endif
+    uint8_t temprature_sens_read();
+#ifdef __cplusplus
+    }
+#endif
+uint8_t temprature_sens_read();
+
+
 void GenerarLog(String s, int tipo){
     switch (tipo)
     {
@@ -65,4 +78,38 @@ String IpCadena(const IPAddress &ip){
     }
     sFn += String(((ip >> 8*3)) & 0xFF);
     return sFn;
+}
+
+void TxMQTT(){
+    for(int i=0; i<2; i++){
+        EncendidoSimple(LEDMQTT);
+        delay(50);
+        ApagadoSimple(LEDMQTT);
+        delay(10);
+    }
+}
+
+void RxMQTT(){
+    for(int i=0; i<1; i++){
+        ParpadeoSimpleAleatorio(5,50,LEDMQTT);
+        delay(5);
+    }
+}
+
+int getCalidadRSSI(int rssi){
+    int calidad = 0;
+    if(rssi <= -100){
+        calidad = 0;
+    }
+    else if(calidad >= -50){
+        calidad = 100;
+    }
+    else{
+        calidad = 2 * (rssi + 100);
+    }
+    return calidad;
+}
+
+float ValorTempCPU(){
+    return tempCPU = (temprature_sens_read() - 32) / 1.8 ;
 }
