@@ -3,6 +3,10 @@
 #define RELAY2 26 //Puerto para el relay 2.
 #define LEDWIFI 12 //Puerto para el LED indicador del WiFi.
 #define LEDMQTT 13 //Puerto para el LED indicador del MQTT.
+/*Versión del Firmware*/
+#define TEXTIFY(A) #A
+#define ESCAPEQUOTE(A) TEXTIFY(A)
+String firmwareActual = ESCAPEQUOTE(BUILD_TAG);
 /*Versión del Hardware*/
 #define HARDWARE "Admin ESP32 V1 00000000" //Versión del hardware.
 /*Variables WiFi*/

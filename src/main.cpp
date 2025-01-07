@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <SPIFFS.h>
+#include <TimeLib.h>
 
 #include "configuraciones.hpp"
 #include "funciones.hpp"
@@ -9,6 +10,9 @@
 #include "configuracionesGuardar.hpp"
 #include "esp32_wifi.hpp"
 #include "esp32_mqtt.hpp"
+#include "esp32_api.hpp"
+#include "esp32_webSocket.hpp"
+#include "esp32_webServer.hpp"
 
 // put function declarations here:
 int myFunction(int, int);
@@ -31,6 +35,8 @@ void setup() {
   WiFiSetup();
 
   LeerConfiguracionMqtt();
+
+  IniciarServidor();
   
 }
 

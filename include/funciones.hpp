@@ -40,6 +40,24 @@ IPAddress IpChar(const char* str){
     return IPAddress(ip[0],ip[1],ip[2],ip[3]);
 }
 
+String CadenaTiempoLargo(const time_t &t){
+    String s = String(t / SECS_PER_DAY) + ":";
+    if (hour(t) < 10){
+        s += "0";
+    }
+    s += String((hour(t))) + ":";
+    if (minute(t) < 10){
+        s += "0";
+    }
+    s += String((minute(t))) + ":";
+    if (second(t) < 10){
+        s += "0";
+    }
+    s += String((second(t)));
+    return s;
+}
+
+
 String HexStr(const unsigned long &h, const byte &l = 8){
     String s;
     s = String(h, HEX);
@@ -55,6 +73,9 @@ String IdUnico(){
     snprintf(idUnico, 15, "%04X", chip);
     return idUnico;
 }
+
+//El DH es nomás por mamón.
+const String dispositivo_id  = HexStr(ESP.getEfuseMac()) + "DH" + String(IdUnico());
 
 String IdDispositivo(){
     return String(Plataforma()) + HexStr(ESP.getEfuseMac()) + String(IdUnico());
