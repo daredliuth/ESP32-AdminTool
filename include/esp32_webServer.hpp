@@ -51,6 +51,9 @@ void HandleHome(AsyncWebServerRequest *peticion){
         // Send Data
         peticion->send(200, "text/html", s);
     }
+    else{
+        peticion->send(500,"text/plain","index.html no encontrado, ¿Ha flasheado los SPIFFS?");
+    }
 }
 
 void IniciarServidor(){
@@ -90,4 +93,8 @@ void IniciarServidor(){
 
     /*Carga de archivos HTML*/
     servidor.on("/",HTTP_GET,HandleHome);
+
+    /*Inicializar servidor web*/
+    servidor.begin();
+    GenerarLog("Servidor HTTP iniciado.",0);
 }

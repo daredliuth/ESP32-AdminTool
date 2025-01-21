@@ -134,3 +134,33 @@ int getCalidadRSSI(int rssi){
 float ValorTempCPU(){
     return tempCPU = (temprature_sens_read() - 32) / 1.8 ;
 }
+
+void ListarDirectorios(fs::FS &fs, const char *dirname, uint8_t levels){
+    Serial.printf("Listando directorios %s\r\n",dirname);
+    File root = fs.open(dirname);
+    if(!root){
+        GenerarLog("Fallo al abrir el directorio.",1);
+        return;
+    }
+    if(!root.isDirectory()){
+        GenerarLog("No es un directorio",1);
+        return;
+    }
+
+    File archivo = root.openNextFile();
+    while (archivo){
+        if(archivo.isDirectory()){
+            GenerarLog("Directorio: " + String(archivo.name()),0);
+            if(levels){
+                ListarDirectorios(fs, archivo.name(), levels-1);
+            }
+        }
+        else{
+            GenerarLog("Archivo: " + String(archivo.name()),0);
+            GenerarLog("\t Tamaño: " + String(archivo.size()),0);
+        }
+        archivo = root.openNextFile();
+    }
+    GenerarLog("Espacio total: " + String(SPIFFS.totalBytes()),0);
+    GenerarLog("Espacio total utilizado: " + String(SPIFFS.usedBytes()),0);
+}

@@ -30,6 +30,8 @@ void setup() {
   ApagadoEncendidoSimple(RELAY1,relay1Estado);
   ApagadoEncendidoSimple(RELAY2,relay2Estado);
   LeerConfiguracionWiFi();
+  contadorReinicios++;
+  GuardarConfiguracionWiFi();
   WiFi.disconnect();
   delay(1000);
   WiFiSetup();
@@ -37,6 +39,8 @@ void setup() {
   LeerConfiguracionMqtt();
 
   IniciarServidor();
+
+  ListarDirectorios(SPIFFS, "/", 0);
   
 }
 

@@ -8,9 +8,10 @@ bool LeerConfiguracionWiFi(){
         return false;
     }
     else{
-
+        //General
         strlcpy(idDispositivo, jsonConfig["idDispositivo"], sizeof(idDispositivo));
         contadorReinicios = jsonConfig["contadorReinicios"];
+        //WiFi
         wifiIpEstatica = jsonConfig["wifiIpEstatica"];
         strlcpy(wifiSsid, jsonConfig["wifiSsid"], sizeof(wifiSsid));
         strlcpy(wifiPassword, jsonConfig["wifiPassword"], sizeof(wifiPassword));
@@ -19,7 +20,7 @@ bool LeerConfiguracionWiFi(){
         strlcpy(wifiSubnet, jsonConfig["wifiSubnet"], sizeof(wifiSubnet));
         strlcpy(wifiDnsPrimaria, jsonConfig["wifiDnsPrimaria"], sizeof(wifiDnsPrimaria));
         strlcpy(wifiDnsSecundaria, jsonConfig["wifiDnsSecundaria"], sizeof(wifiDnsSecundaria));
-
+        //Access point
         apModo = jsonConfig["apModo"];
         strlcpy(apSsid, jsonConfig["apSsid"], sizeof(apSsid));
         strlcpy(apPassword, jsonConfig["apPassword"], sizeof(apPassword));
@@ -34,7 +35,8 @@ bool LeerConfiguracionWiFi(){
 }
 
 boolean LeerConfiguracionMqtt(){
-    StaticJsonDocument<500> jsonConfig;
+    const size_t capacidad = JSON_OBJECT_SIZE(16);
+    StaticJsonDocument<capacidad + 301> jsonConfig;
     File file = SPIFFS.open("/configmqtt.json", "r");
     
     if (deserializeJson(jsonConfig, file)){
