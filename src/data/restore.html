@@ -63,7 +63,7 @@
                 </a>
                 <br />
                 <div class="media-body">
-                    <h5 class="media-heading"> ESP32</h5>
+                    <h5 class="media-heading"> #platform#</h5>
                     <ul class="list-unstyled user-info">
                         <li>
                              <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online
@@ -79,14 +79,24 @@
                     </a>                   
                 </li>
                 <li class="panel">
+                    <a href="esp-wifi">
+                        <i class="icon-signal"></i> WiFi
+                    </a>
+                    <!--
                     <a href="wifi.html" >
                         <i class="icon-signal"></i> WiFi
-                    </a>                   
+                    </a>
+                    -->
                 </li>
                 <li class="panel">
+                    <a href="esp-mqtt">
+                        <i class="icon-sitemap"></i> MQTT
+                    </a>
+                    <!--
                     <a href="mqtt.html" >
                         <i class="icon-sitemap"></i> MQTT
-                    </a>                   
+                    </a>
+                    -->
                 </li>
                 <li class="panel active">
                     <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
@@ -96,10 +106,16 @@
                         </span>
                     </a>
                     <ul class="collapse" id="component-nav">                       
+                        <!--
                         <li class=""><a href="device.html"><i class="icon-angle-right"></i>Dispositivo</a></li>
                         <li class=""><a href="restore.html"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
                         <li class=""><a href="restart.html"><i class="icon-angle-right"></i>Reinicio</a></li>
                         <li class=""><a href="admin.html"><i class="icon-angle-right"></i>Contraseña</a></li>
+                        -->
+                        <li class=""><a href="esp-device"><i class="icon-angle-right"></i>Dispositivo</a></li>
+                        <li class=""><a href="esp-restore"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
+                        <li class=""><a href="esp-restart"><i class="icon-angle-right"></i>Reinicio</a></li>
+                        <li class=""><a href="esp-admin"><i class="icon-angle-right"></i>Contraseña</a></li>
                     </ul>
                 </li>
                 <li class="panel">

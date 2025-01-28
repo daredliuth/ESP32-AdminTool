@@ -1,5 +1,5 @@
 bool LeerConfiguracionWiFi(){
-    StaticJsonDocument<500> jsonConfig;
+    StaticJsonDocument<capacidadWiFi> jsonConfig;
     File file = SPIFFS.open("/configwifi.json", "r");
     
     if (deserializeJson(jsonConfig, file)){
@@ -35,8 +35,7 @@ bool LeerConfiguracionWiFi(){
 }
 
 boolean LeerConfiguracionMqtt(){
-    const size_t capacidad = JSON_OBJECT_SIZE(16);
-    StaticJsonDocument<capacidad + 301> jsonConfig;
+    StaticJsonDocument<capacidadMqtt> jsonConfig;
     File file = SPIFFS.open("/configmqtt.json", "r");
     
     if (deserializeJson(jsonConfig, file)){
@@ -59,7 +58,7 @@ boolean LeerConfiguracionMqtt(){
 }
 
 boolean LeerConfiguracionRelays(){
-    StaticJsonDocument<200> jsonConfig;
+    StaticJsonDocument<capacidadRelays> jsonConfig;
     File file = SPIFFS.open("/configrelays.json","r");
     if(deserializeJson(jsonConfig, file)){
         ReiniciarConfiguracionRelays();

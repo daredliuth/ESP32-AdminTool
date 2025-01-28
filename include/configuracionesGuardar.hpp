@@ -1,5 +1,5 @@
 boolean ConfiguracionGuardarRelays(){
-    StaticJsonDocument<500> jsonConfig;
+    StaticJsonDocument<capacidadRelays> jsonConfig;
     File archivo = SPIFFS.open(F("/configrelays.json"),"w+");
     if(archivo){
         jsonConfig["relay1Estado"] = relay1Estado;
@@ -16,7 +16,7 @@ boolean ConfiguracionGuardarRelays(){
 }
 
 boolean GuardarConfiguracionWiFi(){
-    StaticJsonDocument<500> jsonConfig;
+    StaticJsonDocument<capacidadWiFi> jsonConfig;
     File archivo = SPIFFS.open("/configwifi.json","w+");
     if(archivo){
         //General

@@ -3,6 +3,10 @@
 #define RELAY2 26 //Puerto para el relay 2.
 #define LEDWIFI 12 //Puerto para el LED indicador del WiFi.
 #define LEDMQTT 13 //Puerto para el LED indicador del MQTT.
+/*Capacidad de los JSON*/
+const size_t capacidadWiFi = JSON_OBJECT_SIZE(16)+301;
+const size_t capacidadMqtt = JSON_OBJECT_SIZE(7)+117;
+const size_t capacidadRelays = JSON_OBJECT_SIZE(2)+30;
 /*Versión del Firmware*/
 #define TEXTIFY(A) #A
 #define ESCAPEQUOTE(A) TEXTIFY(A)

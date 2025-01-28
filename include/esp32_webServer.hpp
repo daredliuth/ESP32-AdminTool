@@ -1,28 +1,27 @@
-
 void HandleHome(AsyncWebServerRequest *peticion){
     AsyncResponseStream *respuesta;
 
-    File file = SPIFFS.open(F("/index.html"), "r");
+    File archivo = SPIFFS.open(F("/index.html"), "r");
 
-    if(file){
-        file.setTimeout(100);
-        String s = file.readString();
-        file.close();
+    if(archivo){
+        archivo.setTimeout(100);
+        String s = archivo.readString();
+        archivo.close();
 
-        s.replace(F("#id#"), idDispositivo);
-        s.replace(F("#serie#"), dispositivo_id);
+        s.replace(F("#idDispositivo#"), idDispositivo);
+        s.replace(F("#dispositivo_id#"), dispositivo_id);
         /* Bloque Inalámbrico */
         s.replace(F("#wifi_status#"), WiFi.status() == WL_CONNECTED ? F("<span class='label label-success'>CONECTADO</span>") : F("<span class='label label-danger'>DESCONECTADO</span>"));
-        s.replace(F("#wifi_ssid#"), WiFi.status() == WL_CONNECTED ? F(wifiSsid) : F("WiFi not connected"));
+        s.replace(F("#wifiSsid#"), WiFi.status() == WL_CONNECTED ? F(wifiSsid) : F("WiFi not connected"));
         s.replace(F("#wifi_ip#"),  IpCadena(WiFi.status() == WL_CONNECTED ? WiFi.localIP() : WiFi.softAPIP()));
         s.replace(F("#wifi_mac#"), String(WiFi.macAddress()));
         s.replace(F("#wifi_dbm#"), WiFi.status() == WL_CONNECTED ? String(WiFi.RSSI()) : F("0"));
         s.replace(F("#wifi_percent#"), WiFi.status() == WL_CONNECTED ? String(getCalidadRSSI(WiFi.RSSI())) : F("0"));
         /* Bloque MQTT */
         s.replace(F("#mqtt_status#"), mqttcliente.connected() ? F("<span class='label label-success'>CONECTADO</span>") : F("<span class='label label-danger'>DESCONECTADO</span>"));
-        s.replace(F("#mqtt_server#"), mqttcliente.connected() ? F(mqttServidor) : F("server not connected"));
-        s.replace(F("#mqtt_user#"), F(mqttUsuario));
-        s.replace(F("#mqtt_id#"), F(mqttId));
+        s.replace(F("#mqttServidor#"), mqttcliente.connected() ? F(mqttServidor) : F("server not connected"));
+        s.replace(F("#mqttUsuario#"), F(mqttUsuario));
+        s.replace(F("#mqttId#"), F(mqttId));
         /* Bloque Información */
         s.replace(F("#clientIP#"),IpCadena(peticion->client()->remoteIP()));
         s.replace(F("#userAgent#"), peticion->getHeader("User-Agent")->value().c_str());
@@ -33,7 +32,7 @@ void HandleHome(AsyncWebServerRequest *peticion){
         s.replace(F("#flash_size#"), String(ESP.getFlashChipSize() / (1024.0 * 1024), 2));
         s.replace(F("#ram_size#"), String(ESP.getHeapSize() / 1024.0, 2));
         s.replace(F("#time_active#"), CadenaTiempoLargo(millis() / 1000));
-        s.replace(F("#bootCount#"), String(contadorReinicios));
+        s.replace(F("#contadorReinicios#"), String(contadorReinicios));
         /* Bloque General */
         s.replace(F("#platform#"), Plataforma());
         s.replace(F("#mqtt_on#"), mqttcliente.connected() ? F("<span class='label btn-metis-2'>Online</span>") : F("<span class='label label-danger'>Offline</span>"));
@@ -91,8 +90,127 @@ void IniciarServidor(){
 
     servidor.serveStatic("/www/css/theme.css",SPIFFS,"/www/css/theme.css").setDefaultFile("/www/css/theme.css").setCacheControl("max-age=600");
 
-    /*Carga de archivos HTML*/
+    /*Carga de archivos WiFi*/
     servidor.on("/",HTTP_GET,HandleHome);
+    servidor.on("/esp-wifi", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("wifi.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+            s.replace(F("#wifiSsid#"), wifiSsid);
+            s.replace(F("#wifiIpEstatica#"),wifiIpEstatica ? "Checked" : "");
+            s.replace(F("#wifiIpLocal#"),IpCadena(IpChar(wifiIpLocal)));
+            s.replace(F("#wifiSubnet#"),IpCadena(IpChar(wifiSubnet)));
+            s.replace(F("#wifiGateway#"),IpCadena(IpChar(wifiGateway)));
+            s.replace(F("#wifiDnsPrimaria#"),IpCadena(IpChar(wifiDnsPrimaria)));
+            s.replace(F("#wifiDnsSecundaria#"),IpCadena(IpChar(wifiDnsSecundaria)));
+
+            s.replace(F("#apModo#"),apModo ? "CHecked" : "");
+            s.replace(F("#apSsid#"),String(apSsid));
+            s.replace(F("#apCanal#"),String(apCanal));
+            s.replace(F("#apOculto#"),apOculto ? "Checked" : "");
+            s.replace(F("#apNumConexiones#"),String(apNumConexiones));
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","wifi.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+    /*Carga de archivos MQTT*/
+    servidor.on("/esp-mqtt", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("mqtt.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+            s.replace(F("#mqttHabilitado#"), mqttHabilitado ? "Checked" : "");
+            s.replace(F("#mqttId#"),mqttId);
+            s.replace(F("#mqttUsuario#"),mqttUsuario);
+            s.replace(F("#mqttServidor#"),mqttServidor);
+            s.replace(F("#mqttPuerto#"),String(mqttPuerto));
+            s.replace(F("#mqttTiempo#"),String(mqttTiempo/60000));
+
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","mqtt.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+
+    /*Carga de archivos device.*/
+    servidor.on("/esp-device", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("device.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+            s.replace(F("#idDispositivo#"), idDispositivo);
+            s.replace(F("#dispositivo_id#"), dispositivo_id);
+
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","device.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+
+    /*Carga de archivos restore.*/
+    servidor.on("/esp-restore", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("restore.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","restore.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+
+    /*Carga de archivos restart.*/
+    servidor.on("/esp-restart", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("restart.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","restart.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+
+    /*Carga de archivos admin*/
+    servidor.on("/esp-admin", HTTP_GET,[](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("admin.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            s.replace(F("#platform#"), Plataforma());
+
+            peticion->send(200,"text/html",s);
+        }
+        else{
+            peticion->send(500,"text/plain","admin.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
 
     /*Inicializar servidor web*/
     servidor.begin();

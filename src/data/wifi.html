@@ -63,7 +63,7 @@
                 </a>
                 <br />
                 <div class="media-body">
-                    <h5 class="media-heading"> ESP32</h5>
+                    <h5 class="media-heading"> #platform#</h5>
                     <ul class="list-unstyled user-info">
                         <li>
                              <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> Online
@@ -79,14 +79,24 @@
                     </a>                   
                 </li>
                 <li class="panel active">
+                    <a href="esp-wifi">
+                        <i class="icon-signal"></i> WiFi
+                    </a>
+                    <!--
                     <a href="wifi.html" >
                         <i class="icon-signal"></i> WiFi
-                    </a>                   
+                    </a>
+                    -->
                 </li>
                 <li class="panel">
+                    <a href="esp-mqtt">
+                        <i class="icon-sitemap"></i> MQTT
+                    </a>
+                    <!--
                     <a href="mqtt.html" >
                         <i class="icon-sitemap"></i> MQTT
-                    </a>                   
+                    </a>
+                    -->
                 </li>
                 <li class="panel ">
                     <a href="#" data-parent="#menu" data-toggle="collapse" class="accordion-toggle" data-target="#component-nav">
@@ -96,10 +106,16 @@
                         </span>
                     </a>
                     <ul class="collapse" id="component-nav">                       
+                        <!--
                         <li class=""><a href="device.html"><i class="icon-angle-right"></i>Dispositivo</a></li>
                         <li class=""><a href="restore.html"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
                         <li class=""><a href="restart.html"><i class="icon-angle-right"></i>Reinicio</a></li>
                         <li class=""><a href="admin.html"><i class="icon-angle-right"></i>Contraseña</a></li>
+                        -->
+                        <li class=""><a href="esp-device"><i class="icon-angle-right"></i>Dispositivo</a></li>
+                        <li class=""><a href="esp-restore"><i class="icon-angle-right"></i>Ajustes predeterminados</a></li>
+                        <li class=""><a href="esp-restart"><i class="icon-angle-right"></i>Reinicio</a></li>
+                        <li class=""><a href="esp-admin"><i class="icon-angle-right"></i>Contraseña</a></li>
                     </ul>
                 </li>
                 <li class="panel">
@@ -137,104 +153,104 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="formSSID">
-                                    <label for="ssid" class="control-label col-lg-3">Nombre de la red inalámbrica</label>
+                                    <label for="wifiSsid" class="control-label col-lg-3">Nombre de la red inalámbrica</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="ssid" value="CD_UNAM" placeholder="Nombre de la red (SSID)" class="form-control">
-                                        <label for="ssid" class="help-block formulario_input-error">La red inalámbrica tiene un límite de 30 dígitos.</label>
+                                        <input type="text" id="wifiSsid" value="#wifiSsid#" placeholder="Nombre de la red (SSID)" class="form-control">
+                                        <label for="wifiSsid" class="help-block formulario_input-error">La red inalámbrica tiene un límite de 30 dígitos.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formPw">
-                                    <label for="pw" class="control-label col-lg-3">Contraseña de la red inalámbrica</label>
+                                    <label for="wifiPassword" class="control-label col-lg-3">Contraseña de la red inalámbrica</label>
                                     <div class="col-lg-5">
-                                        <input type="password" id="pw" name="pw" value="" placeholder="*******" class="form-control">
-                                        <label for="pw" class="help-block formulario_input-error">La contraseña tiene un límite de 30 dígitos.</label>
+                                        <input type="password" id="wifiPassword" name="wifiPassword" value="" placeholder="*******" class="form-control">
+                                        <label for="wifiPassword" class="help-block formulario_input-error">La contraseña tiene un límite de 30 dígitos.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label for="text1" class="control-label col-lg-3">IP Estática:</label>
+                                    <label for="wifiIpEstatica" class="control-label col-lg-3">IP Estática:</label>
                                     <div class="col-lg-5">
                                         <div class="make-switch switch-mini" data-on="primary" data-off="danger">
-                                            <input type="checkbox" #staticIP# id="staticIP" onchange="IpEnable()"/>
+                                            <input type="checkbox" #wifiIpEstatica# id="wifiIpEstatica" onchange="IpEnable()"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formLocalIP">
-                                    <label for="localIP" class="control-label col-lg-3">Dirección IP:</label>
+                                    <label for="wifiIpLocal" class="control-label col-lg-3">Dirección IP:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="localIP" name="localIP" placeholder="Dirección IP" value="192.168.100.1" class="form-control ip">
-                                        <label for="localIP" class="help-block formulario_input-error">No es una IP válida.</label>
+                                        <input type="text" id="wifiIpLocal" name="wifiIpLocal" placeholder="Dirección IP" value="#wifiIpLocal#" class="form-control ip">
+                                        <label for="wifiIpLocal" class="help-block formulario_input-error">No es una IP válida.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formSubnet">
-                                    <label for="subnet" class="control-label col-lg-3">Máscara de subred:</label>
+                                    <label for="wifiSubnet" class="control-label col-lg-3">Máscara de subred:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="subnet" name="subnet" placeholder="Máscara de subred" value="255.255.255.0" class="form-control ip">
-                                        <label for="subnet" class="help-block formulario_input-error">No es una máscara válida.</label>
+                                        <input type="text" id="wifiSubnet" name="wifiSubnet" placeholder="Máscara de subred" value="#wifiSubnet#" class="form-control ip">
+                                        <label for="wifiSubnet" class="help-block formulario_input-error">No es una máscara válida.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formGateway">
-                                    <label for="gateway" class="control-label col-lg-3">Puerta de enlace:</label>
+                                    <label for="wifiGateway" class="control-label col-lg-3">Puerta de enlace:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="gateway" name="gateway" placeholder="Puerta de enlace" value="192.168.100.1" class="form-control ip">
-                                        <label for="gateway" class="help-block formulario_input-error">No es una puerta de enlace válida.</label>
+                                        <input type="text" id="wifiGateway" name="wifiGateway" placeholder="Puerta de enlace" value="#wifiGateway#" class="form-control ip">
+                                        <label for="wifiGateway" class="help-block formulario_input-error">No es una puerta de enlace válida.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formPrimaryDNS">
-                                    <label for="primaryDNS" class="control-label col-lg-3">DNS primario:</label>
+                                    <label for="wifiDnsPrimaria" class="control-label col-lg-3">DNS primario:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="primaryDNS" name="primaryDNS" placeholder="DNS primario" value="8.8.8.8" class="form-control ip">
-                                        <label for="primaryDNS" class="help-block formulario_input-error">No es un DNS válido.</label>
+                                        <input type="text" id="wifiDnsPrimaria" name="wifiDnsPrimaria" placeholder="DNS primario" value="#wifiDnsPrimaria#" class="form-control ip">
+                                        <label for="wifiDnsPrimaria" class="help-block formulario_input-error">No es un DNS válido.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formSecondaryDNS">
-                                    <label for="secondaryDNS" class="control-label col-lg-3">DNS secundario:</label>
+                                    <label for="wifiDnsSecundaria" class="control-label col-lg-3">DNS secundario:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="secondaryDNS" name="secondaryDNS" placeholder="DNS secundario" value="8.8.4.4" class="form-control ip">
-                                        <label for="secondaryDNS" class="help-block formulario_input-error">No es un DNS válido.</label>
+                                        <input type="text" id="wifiDnsSecundaria" name="wifiDnsSecundaria" placeholder="DNS secundario" value="#wifiDnsSecundaria#" class="form-control ip">
+                                        <label for="wifiDnsSecundaria" class="help-block formulario_input-error">No es un DNS válido.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label for="text1" class="control-label col-lg-3">Modo AP:</label>
+                                    <label for="apModo" class="control-label col-lg-3">Modo AP:</label>
                                     <div class="col-lg-5">
                                         <div class="make-switch switch-mini" data-on="primary" data-off="danger">
-                                            <input type="checkbox" #accessPoint# id="accessPoint" onchange="ApEnable()"/>
+                                            <input type="checkbox" #apModo# id="apModo" onchange="ApEnable()"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formNombreAP">
-                                    <label for="nombreAP" class="control-label col-lg-3">Nombre del punto de acceso:</label>
+                                    <label for="apSsid" class="control-label col-lg-3">Nombre del punto de acceso:</label>
                                     <div class="col-lg-5">
-                                        <input type="text" id="nombreAP" name="nombreAP" placeholder="Nombre (SSID) del punto de acceso" value="esp32WiFi" class="form-control ap">
-                                        <label for="nombreAP" class="help-block formulario_input-error">El punto de acceso tiene un límite de 31 dígitos</label>
+                                        <input type="text" id="apSsid" name="apSsid" placeholder="Nombre (SSID) del punto de acceso" value="#apSsid#" class="form-control ap">
+                                        <label for="apSsid" class="help-block formulario_input-error">El punto de acceso tiene un límite de 31 dígitos</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formPasswordAP">
-                                    <label for="passwordAP" class="control-label col-lg-3">Contraseña del punto de acceso:</label>
+                                    <label for="apPassword" class="control-label col-lg-3">Contraseña del punto de acceso:</label>
                                     <div class="col-lg-5">
-                                        <input type="password" id="passwordAP" name="passwordAP" placeholder="******" class="form-control ap">
-                                        <label for="passwordAP" class="help-block formulario_input-error">La contraseña del punto de acceso tiene un límite de 63 dígitos</label>
+                                        <input type="password" id="apPassword" name="apPassword" placeholder="******" class="form-control ap">
+                                        <label for="apPassword" class="help-block formulario_input-error">La contraseña del punto de acceso tiene un límite de 63 dígitos</label>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formCanalAP">
-                                    <label for="canalAP" class="control-label col-lg-3">Canal del punto de acceso:</label>
+                                    <label for="apCanal" class="control-label col-lg-3">Canal del punto de acceso:</label>
                                     <div class="col-lg-5">
-                                        <input type="number" id="canalAP" name="canalAP" placeholder="Canal 1 - 13" value="13" class="form-control ap">
-                                        <label for="canalAP" class="help-block formulario_input-error">El canal no es válido.</label>
+                                        <input type="number" id="apCanal" name="apCanal" placeholder="Canal 1 - 13" value="#apCanal#" class="form-control ap">
+                                        <label for="apCanal" class="help-block formulario_input-error">El canal no es válido.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" >
-                                    <label for="hiddenAP" class="control-label col-lg-3">Visibilidad:</label>
+                                    <label for="apOculto" class="control-label col-lg-3">Visibilidad:</label>
                                     <div class="col-lg-5">
                                         <div class="make-switch switch-mini" data-on="primary" data-off="danger">
-                                            <input type="checkbox" #visibilidadAP# id="visibilidadAP" onchange="ApVisEnable()"/>
+                                            <input type="checkbox" #apOculto# id="apOculto" onchange="ApVisEnable()"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group" id="formConnetAP">
-                                    <label for="connetAP" class="control-label col-lg-3">Número de conexiones:</label>
+                                    <label for="apNumConexiones" class="control-label col-lg-3">Número de conexiones:</label>
                                     <div class="col-lg-5">
-                                        <input type="number" id="connetAP" name="connetAP" placeholder="Min: 0 - Máx: 8" value="2" class="form-control ap">
-                                        <label for="connetAP" class="help-block formulario_input-error">No es un número de conexiones válido.</label>
+                                        <input type="number" id="apNumConexiones" name="apNumConexiones" placeholder="Min: 0 - Máx: 8" value="#apNumConexiones#" class="form-control ap">
+                                        <label for="apNumConexiones" class="help-block formulario_input-error">No es un número de conexiones válido.</label>
                                     </div>
                                 </div>
                                 <div class="form-group" >
