@@ -90,6 +90,7 @@ void IniciarServidor(){
 
     servidor.serveStatic("/www/css/theme.css",SPIFFS,"/www/css/theme.css").setDefaultFile("/www/css/theme.css").setCacheControl("max-age=600");
 
+    servidor.serveStatic("/www/css/error.css",SPIFFS,"/www/css/error.css").setDefaultFile("/www/css/error.css").setCacheControl("max-age=600");
     /*Carga de archivos WiFi*/
     servidor.on("/",HTTP_GET,HandleHome);
     servidor.on("/esp-wifi", HTTP_GET,[](AsyncWebServerRequest *peticion){
@@ -209,6 +210,18 @@ void IniciarServidor(){
         }
         else{
             peticion->send(500,"text/plain","admin.html no encontrado, ¿Ha flasheado los SPIFFS?");
+        }
+    });
+
+    /*Carga de arcchivos error*/
+    servidor.onNotFound([](AsyncWebServerRequest *peticion){
+        File archivo = SPIFFS.open(F("error.html"),"r");
+        if(archivo){
+            archivo.setTimeout(100);
+            String s = archivo.readString();
+            archivo.close();
+
+            peticion->send(404,"text/html",s);
         }
     });
 
